@@ -44,7 +44,8 @@ jobs:
               run: |
                 chmod +x generate_inventory.sh
                 ./generate_inventory.sh
-                export ANSIBLE_HOST_KEY_CHECKING=False
 
             - name: Run ansible playbook
+              env:
+                ANSIBLE_HOST_KEY_CHECKING: False
               run: ansible-playbook -i hosts site.yml
