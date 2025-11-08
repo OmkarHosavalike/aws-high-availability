@@ -11,7 +11,7 @@ output "target_group_arn" {
 output "key_pair_private_key" {
   value       = tls_private_key.key.private_key_pem
   sensitive   = true
-  description = "Private key for accessing the EC2 instance from ansible"
+  description = "Private key for accessing the EC2 instance"
 }
 
 output "asg_name" {
