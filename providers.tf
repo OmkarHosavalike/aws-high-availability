@@ -7,7 +7,7 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "aws-high-availability-omkar"
+    bucket = "${var.BACKEND_S3_BUCKET}"
     key = "terraform/terraform.tfstate"
     region = "us-east-1"
   }

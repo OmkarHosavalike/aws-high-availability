@@ -9,14 +9,17 @@ permissions:
     id-token: write
     contents: read
 
+env:
+    TF_VAR_BACKEND_S3_BUCKET: ${{ secrets.BACKEND_S3_BUCKET }}
+
 jobs:
     deploy_with_terraform:
         runs-on: ubuntu-latest
         steps:
-            - name: checkout the code
+            - name: Checkout the code
               uses: actions/checkout@v4
             
-            - name: Setup terraform
+            - name: Setup Terraform
               uses: hashicorp/setup-terraform@v3
               with:
                 terraform_version: 1.7.0
@@ -24,10 +27,10 @@ jobs:
             - name: Configure AWS credentials
               uses: aws-actions/configure-aws-credentials@v5
               with:
-                role-to-assume: arn:aws:iam::679217508170:role/aws-high-availability-role
+                role-to-assume: ${{ secrets.OIDC_IAM_ROLE }}
                 aws-region: us-east-1
 
-            - name: initialize terraform
+            - name: Initialize terraform
               run: terraform init -input=false
 
             - name: Apply the configuration
@@ -37,10 +40,10 @@ jobs:
         needs: deploy_with_terraform
         runs-on: ubuntu-latest
         steps:
-            - name: checkout the code
+            - name: Checkout the code
               uses: actions/checkout@v4
             
-            - name: Setup terraform
+            - name: Setup Terraform
               uses: hashicorp/setup-terraform@v3
               with:
                 terraform_version: 1.7.0
@@ -48,10 +51,10 @@ jobs:
             - name: Configure AWS credentials
               uses: aws-actions/configure-aws-credentials@v5
               with:
-                role-to-assume: arn:aws:iam::679217508170:role/aws-high-availability-role
+                role-to-assume: ${{ secrets.OIDC_IAM_ROLE }}
                 aws-region: us-east-1
 
-            - name: initialize terraform
+            - name: Initialize terraform
               run: terraform init -input=false
 
             - name: Update ssh rule to allow current runner IP
@@ -62,17 +65,17 @@ jobs:
                 terraform output -raw key_pair_private_key > deployer-key.pem
                 chmod 600 deployer-key.pem
             
-            - name: Install ansible
+            - name: Install Ansible
               run: |
                 sudo apt-get update -y
                 sudo apt-get install -y ansible              
 
-            - name: Setup ansible configurations
+            - name: Setup Ansible configurations
               run: |
                 chmod +x generate_inventory.sh
                 ./generate_inventory.sh
 
-            - name: Run ansible playbook
+            - name: Run Ansible playbook
               env:
                 ANSIBLE_HOST_KEY_CHECKING: False
               run: ansible-playbook -i hosts site.yml
