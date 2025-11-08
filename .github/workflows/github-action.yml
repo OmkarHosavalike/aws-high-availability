@@ -1,7 +1,10 @@
 name: Workflow to deploy high availability setup
 on:
-    workflow_dispatch:
-
+    push:
+        branches: [ main ]
+        paths-ignore:
+            - 'README.md'
+      
 permissions:
     id-token: write
     contents: read
