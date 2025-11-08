@@ -36,7 +36,9 @@ jobs:
                 chmod 600 deployer-key.pem
             
             - name: Install ansible
-              run: sudo yum install ansible -y
+              run: |
+                sudo apt update
+                sudo apt install -y ansible              
 
             - name: Setup ansible configurations
               run: |
