@@ -21,10 +21,10 @@ cd aws-high-availability
 ```
 2. Configure repository secret variables:
 
-    BACKEND_S3_BUCKET → S3 bucket for Terraform state (enable versioning)
-    OIDC_IAM_ROLE → IAM role ARN for GitHub Actions
+- BACKEND_S3_BUCKET → S3 bucket for Terraform state (enable versioning)
+- OIDC_IAM_ROLE → IAM role ARN for GitHub Actions
 
-3. Run the workflow via GitHub Actions (By pushing to main branch)
+3. Run the workflow via GitHub Actions (By pushing to main branch)  
    Terraform provisions infrastructure and Ansible configures EC2 instances.
 
 4. Test the app:
