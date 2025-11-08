@@ -9,9 +9,6 @@ permissions:
     id-token: write
     contents: read
 
-env:
-    TF_VAR_backend_s3_bucket: ${{ secrets.BACKEND_S3_BUCKET }}
-
 jobs:
     deploy_with_terraform:
         runs-on: ubuntu-latest
@@ -31,7 +28,7 @@ jobs:
                 aws-region: us-east-1
 
             - name: Initialize terraform
-              run: terraform init -input=false
+              run: terraform init -input=false -backend-config="bucket=${{ secrets.BACKEND_S3_BUCKET }}"
 
             - name: Apply the configuration
               run: terraform apply -auto-approve
@@ -55,7 +52,7 @@ jobs:
                 aws-region: us-east-1
 
             - name: Initialize terraform
-              run: terraform init -input=false
+              run: terraform init -input=false -backend-config="bucket=${{ secrets.BACKEND_S3_BUCKET }}"
 
             - name: Update ssh rule to allow current runner IP
               run: terraform apply -auto-approve -target=aws_vpc_security_group_ingress_rule.ssh
