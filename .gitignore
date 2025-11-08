@@ -31,3 +31,5 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+#exclude unused user_data.sh
+user_data.sh
