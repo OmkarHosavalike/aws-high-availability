@@ -28,7 +28,7 @@ jobs:
               run: terraform init -input=false
 
             - name: Apply the configuration
-              run: terraform apply --auto-apporve
+              run: terraform apply -auto-apporve
 
             - name: Setup private key
               run: |
