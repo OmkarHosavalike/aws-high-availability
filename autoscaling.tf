@@ -24,8 +24,8 @@ resource "aws_launch_template" "web_lt" {
 
 resource "aws_autoscaling_group" "web_asg" {
   name                = "web-asg"
-  max_size            = 3
-  min_size            = 1
+  max_size            = 4
+  min_size            = 2
   desired_capacity    = 2
   vpc_zone_identifier = [aws_subnet.public1.id, aws_subnet.public2.id]
 
@@ -37,7 +37,7 @@ resource "aws_autoscaling_group" "web_asg" {
   target_group_arns = [aws_lb_target_group.web_tg.arn]
 
   health_check_type         = "ELB"
-  health_check_grace_period = 120
+  health_check_grace_period = 240
 
   tag {
     key                 = "Name"
