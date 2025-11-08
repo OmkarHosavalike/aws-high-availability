@@ -17,3 +17,7 @@ data "aws_ami" "amazon_linux" {
     values = ["al2023-ami-*-x86_64"]
   }
 }
+
+variable "backend_s3_bucket" {
+  type = string
+}

@@ -10,7 +10,7 @@ permissions:
     contents: read
 
 env:
-    TF_VAR_BACKEND_S3_BUCKET: ${{ secrets.BACKEND_S3_BUCKET }}
+    TF_VAR_backend_s3_bucket: ${{ secrets.BACKEND_S3_BUCKET }}
 
 jobs:
     deploy_with_terraform:
